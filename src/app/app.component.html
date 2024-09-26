@@ -1,1 +1,15 @@
-<app-nx-welcome></app-nx-welcome> <router-outlet></router-outlet>
+<div class="w-full flex justify-center">
+  <div class="max-w-md w-full py-4">
+    <div class="w-full flex justify-center">
+      <button class="btn btn-primary" (click)="openDialog()">
+        Abrir Dialog
+      </button>
+    </div>
+
+    <div class="card bg-neutral text-neutral-content mt-4">
+      <div class="card-body items-center text-center">
+        <h2 class="card-title">{{ huminazedResult() }}</h2>
+      </div>
+    </div>
+  </div>
+</div>

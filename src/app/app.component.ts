@@ -1,14 +1,32 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { Component, computed, inject, signal } from '@angular/core';
+
+import { DialogService } from './dialog/dialog.service';
+import { ConfirmationDialogComponent } from './confirmation-dialog.components';
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'custom-dialog';
+  dialogService = inject(DialogService);
+
+  result = signal<unknown>(null);
+
+  huminazedResult = computed(() => {
+    if (this.result() == null) {
+      return 'Aguardando resposta...';
+    } else if (this.result() == true) {
+      return 'Sim';
+    } else {
+      return 'Não';
+    }
+  });
+
+  openDialog() {
+    const dialog = this.dialogService.open(ConfirmationDialogComponent);
+    dialog.afterClosed().subscribe((result) => {
+      this.result.set(result);
+    });
+  }
 }
